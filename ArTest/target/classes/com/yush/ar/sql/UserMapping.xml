@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.yush.ar.dao.UserDao">
+ 
+ 	<select id="findByName"  parameterType="string"
+		resultType="com.yush.ar.entity.Users">
+	SELECT  userId,userName,passWord,randomKey  FROM  t_users WHERE
+	 userName=#{username} or email=#{username} or mobilePhone=#{username} LIMIT 1;
+	</select>
+	 
+	<select id="getByIdUsers"  parameterType="int"
+		resultType="com.yush.ar.entity.Users">
+			SELECT  *  FROM  t_users WHERE userID=#{userid} LIMIT 1;
+	</select>
+	 
+	 <update id="addLoginPoint" parameterType="int">
+		update t_users set userPoints=userPoints+10  where userId=#{userid};
+ 	 </update>
+	 
+	 <select id="getLastLoginTime"  parameterType="int"
+			resultType="Date">
+			SELECT  last_login_time  FROM  t_users WHERE
+			userId=#{userid} LIMIT 1;
+    </select>
+    
+	  <update id="setLastLoginTime">
+		update t_users set last_login_time=now(),loginIP=#{ip,jdbcType=VARCHAR},randomKey=#{randomkey,jdbcType=VARCHAR}
+		  where userId=#{userid,jdbcType=INTEGER};
+ 	 </update>
+		
+     <insert id="saveLog">
+			INSERT INTO t_log(user_id,statrtTime,endTime,remote_ip,randomKey)
+			VALUES(#{userid},now(),DATE_SUB(SYSDATE(),INTERVAL -10 MINUTE),#{ip,jdbcType=VARCHAR},#{randomkey,jdbcType=VARCHAR})
+ 	 </insert>		
+ 	 
+	<update id="clearIp"  parameterType="int">
+		update t_users set  loginIP='' where userId=#{userid};
+ 	 </update> 
+ 	 
+ 	 <update id="setEndTime" >
+		update t_log set endTime=now() where user_id=#{userid,jdbcType=INTEGER} and randomKey=#{randomkey,jdbcType=VARCHAR};
+ 	 </update>
+		
+		  
+	  <select id="getLi1" resultType="int">
+		SELECT userId  FROM  t_users   LIMIT 1;
+	   </select>
+	
+	<insert id="addUser" parameterType="com.yush.ar.entity.Users">
+		INSERT INTO t_users(userName,password,email,mobilePhone,emailStatus,userStatus,isRegistered,registerTime
+			<if test="type=='github'">
+				,gitHub
+			</if>
+			<if test="type=='baidu'">
+				,baiDu
+			</if>
+			<if test="type=='weibo'">
+				,weiBo
+			</if>
+			<if test="type=='qq'">
+				,qq
+			</if>
+		)
+		VALUES(
+		#{users.username,jdbcType=VARCHAR},#{users.password,jdbcType=VARCHAR},#{users.email,jdbcType=VARCHAR},
+			#{users.mobilePhone,jdbcType=VARCHAR},0,0,1,now()
+		  <if test="type!=null">
+			, #{openId,jdbcType=VARCHAR}
+		  </if>
+		
+		)
+  </insert>
+  
+  <select id="checkUser"  parameterType="string"
+		resultType="com.yush.ar.entity.Users">
+	SELECT userName  FROM  t_users WHERE
+	 userName=#{username} LIMIT 1;
+   </select>
+	
+	<select id="checkEmail"  parameterType="string"
+		resultType="com.yush.ar.entity.Users">
+		SELECT  userName  FROM  t_users WHERE
+		 email=#{email} LIMIT 1;
+   </select>
+	
+	<select id="getNameUsers"  parameterType="string"
+		resultType="com.yush.ar.entity.Users">
+		SELECT  *  FROM  t_users WHERE
+		 userName=#{username} LIMIT 1;
+    </select>
+	
+	
+	<insert id="addTemUser" >
+	INSERT INTO t_users(userName,password,emailStatus,userStatus,isRegistered,registerTime)
+	VALUES(
+	#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},1,0,0,now()
+	)
+  </insert>
+	
+ <update id="bangdUsers">
+		update t_users set
+		 <if test="type=='github'">
+		 	gitHub=#{openId,jdbcType=VARCHAR}
+		 </if>
+		 <if test="type=='baidu'">
+		 	baiDu=#{openId,jdbcType=VARCHAR}
+		 </if>
+		 <if test="type=='weibo'">
+		 	weiBo=#{openId,jdbcType=VARCHAR}
+		 </if>
+		  <if test="type=='qq'">
+		 	qq=#{openId,jdbcType=VARCHAR}
+		 </if>
+		  where userName=#{username,jdbcType=VARCHAR};
+  </update>
+  
+ <update id="perfectUser" parameterType="com.yush.ar.entity.Users">
+	update t_users set userName=#{username},password=#{password},email=#{email},mobilePhone=#{mobilePhone},
+	 emailStatus=0,isRegistered=1 where userId=#{userid};
+  </update>
+	
+	
+  <update id="editUser">
+		update t_users set realName=#{users.realName,jdbcType=VARCHAR},birthday=STR_TO_DATE(#{users.birthday,jdbcType=DATE},'%Y-%m-%d'),
+		city=#{users.city,jdbcType=VARCHAR}  where userId=#{userid,jdbcType=INTEGER};
+  </update>
+		
+	<resultMap id="UserLevelMent" type="com.yush.ar.entity.Userlevel">
+        <id column="UserLevelID" property="userlevelid" />
+        <result column="UserLevelName" property="userlevelname" />
+        <result column="UserLevelPoints" property="userlevelpoints" />
+    </resultMap>
+	<select id="getAllLevel"  resultMap="UserLevelMent" >
+		SELECT  userLevelID,userLevelName,userLevelPoints  FROM  i_userlevel ;
+    </select>
+	
+	<insert id="registerUser">
+		INSERT INTO t_users(userName,password,email,emailStatus,userStatus,isRegistered,registerTime)
+		VALUES(
+		#{username},#{password},#{email},0,0,1,now()
+		)
+  </insert>
+  
+ 	 <select id="checkOauthUser"  resultType="com.yush.ar.entity.Users">
+		 SELECT userId,userName,password,email  FROM  t_users WHERE 1=1 
+		 <if test="type=='github'">
+		 		and gitHub=#{openId} 
+		 </if>
+		  <if test="type=='baidu'">
+		 		and baiDu=#{openId} 
+		 </if>
+		  <if test="type=='weibo'">
+		 		and weiBo=#{openId} 
+		 </if>
+		   <if test="type=='qq'">
+		 		and qq=#{openId} 
+		 </if>
+		  LIMIT 1;
+    </select>
+    
+   	
+	 <select id="countUser"  resultType="INTEGER">
+			SELECT  count(1) FROM  t_users where 1=1 
+			<if test="state!=null&amp;&amp;state!=''">
+			 and  userStatus=#{state}
+	 		</if>
+	</select>
+   	
+    <select id="listUser"  resultType="hashmap">
+			SELECT  u.*,(SELECT count(1) FROM t_follower f WHERE f.u1 = u.userId ) as count1,
+			(SELECT count(1) FROM t_follower f1 WHERE f1.u2 = u.userId ) as count2  FROM  t_users u where 1=1 
+			<if test="state!=null&amp;&amp;state!=''">
+			 and  u.userStatus=#{state}
+	 		</if>
+		  order by  u.registerTime  desc limit #{start},#{end};
+	</select>
+   	
+   	<update id="updateUserState">
+   			update t_users  set userStatus=#{state} where userId in 
+		 <foreach  item="item" index="index" collection="userIds" open="(" separator="," close=")">
+			 	  #{item}  
+		</foreach>
+   	</update>
+    <select id="countUserFensi"  resultType="INTEGER">
+			SELECT count(1) FROM t_follower WHERE 
+			<if test="type==0">
+			 u1 = #{userId}
+			</if>
+			<if test="type==1">
+			 u2 = #{userId}
+			</if>
+	</select>
+	
+   	  <select id="listUserFensi"  resultType="hashmap">
+	 		SELECT  userhead,userName,realName,gender,registerTime FROM t_follower LEFT JOIN t_users on
+	 		 <if test="type==0">
+	 		 u2=userId  WHERE u1 = #{userId} 
+			</if>
+	 		<if test="type==1">
+	 		 u1=userId  WHERE u2 = #{userId} 
+			</if>
+		  	order by  registerTime  desc limit #{start},#{end};
+	</select>
+   	
+   
+</mapper>

@@ -1,0 +1,225 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>首页</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="assets/i/favicon.png">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style type="text/css">
+  </style>
+</head>
+<body>
+<!-- Header -->
+<header data-am-widget="header" class="am-header am-header-default">
+    <!--  <button class="am-btn am-btn-danger am-btn-xs">用户</button>
+     <button class="am-btn am-btn-danger am-btn-xs">搜索</button> -->
+     <div class="head-icon">
+		<a class="ico-search"> <span><i></i></span></a>
+		<a class="ico-my"> <span><i></i></span></a>
+	</div>
+</header>
+<div class="homeSearch am-nav" id="homeSearch" style="height:32px;">
+	<div id="new_searchtext">
+		<form id="searchForm" method="get" action="plugin.php">
+		<input type="hidden" name="id" value="dzapp_shop">
+		<input type="hidden" name="mod" value="list">
+		<input id="keyword" class="inp-search" name="keyword" type="search" value="" placeholder="输入资源名搜索" x-webkit-speech="">
+		<input class="btn-search" name="search-btn" type="submit" value="搜索">
+		</form>
+	</div>
+</div>
+
+<div class="doc-example">
+	<ul class="am-nav am-nav-pills ">
+		<li><a href="#"><small>房地产</small></a></li>
+		<li><a href="#"><small>品牌</small></a></li>
+		<li><a href="#"><small>娱乐</small></a></li>
+		<li><a href="#"><small>汽车</small></a></li>
+		<li><a href="#"><small>活动</small></a></li>
+		<li>
+			<a class="smore am-collapsed">
+			<small>更多<span class="am-icon-angle-down"></span></small></a>
+		</li>	
+		<li class="other"><a href="#"><small>萌宠</small></a></li>
+		<li class="other"><a href="#"><small>二次元</small></a></li>
+		<li class="other"><a href="#"><small>高达</small></a></li>
+	</ul>
+	<!-- <ul class="am-nav am-nav-pills  am-collapse sortmore" id="sortmore">
+		<li><a href="#"><small>萌宠</small></a></li>
+		<li><a href="#"><small>二次元</small></a></li>
+		<li><a href="#"><small>高达</small></a></li>
+	</ul> -->
+	</div>
+<!-- Slider -->
+<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{"directionNav":false}'>
+  <ul class="am-slides">
+    <li>
+      <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg">
+    </li>
+    <li>
+      <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg">
+    </li>
+    <li>
+      <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg">
+    </li>
+    <li>
+      <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg">
+    </li>
+  </ul>
+</div>
+
+<!-- List -->
+<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <!--列表标题-->
+  <div class="am-list-news-hd am-cf">
+    <!--带更多链接-->
+    <h2>推荐</h2>
+    <a href="###">
+      <span class="am-list-news-more am-fr">更多 &raquo;</span>
+    </a>
+  </div>
+		<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+		  am-avg-md-3 am-avg-lg-4 am-gallery-default">
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-1.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg"
+		             alt="远方 有一个地方 那里种有我们的梦想" />
+		        <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+		        <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"
+		             alt="某天 也许会相遇 相遇在这个好地方" />
+		        <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
+		       <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"
+		             alt="不要太担心 只因为我相信" />
+		        <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
+		        <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"
+		             alt="终会走过这条遥远的道路" />
+		        <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
+		       <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		</ul>
+  </div>
+  
+  <div data-am-widget="list_news" class="am-list-news am-list-news-default">
+  <!--列表标题-->
+  <div class="am-list-news-hd am-cf">
+    <!--带更多链接-->
+    <h2>最新</h2>
+    <a href="###">
+      <span class="am-list-news-more am-fr">更多 &raquo;</span>
+    </a>
+  </div>
+		<ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
+		  am-avg-md-3 am-avg-lg-4 am-gallery-default" data-am-gallery="{ pureview: true }">
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-1.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg"
+		             alt="远方 有一个地方 那里种有我们的梦想" />
+		        <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
+		        <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"
+		             alt="某天 也许会相遇 相遇在这个好地方" />
+		        <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
+		        <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"
+		             alt="不要太担心 只因为我相信" />
+		        <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
+		        <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		  <li>
+		    <div class="am-gallery-item">
+		      <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg"
+		         class="">
+		        <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"
+		             alt="终会走过这条遥远的道路" />
+		        <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
+		        <div class="am-gallery-desc am-fl">cy19734682</div>
+		        <div class="am-gallery-desc am-fr">2375-09-26</div>
+		      </a>
+		    </div>
+		  </li>
+		</ul>
+  </div>
+
+<!-- Navbar -->
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+     id="">
+  <ul class="am-navbar-nav am-cf am-avg-sm-4">
+    <li>
+         <a href="JavaScript:;"><span class="am-navbar-label">我的项目</span></a>
+    </li>
+  </ul>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/amazeui.min.js"></script>
+<script type="text/javascript">
+	$(".smore").click(function(){
+		$(".other").toggle();
+	});
+	$(".ico-search").click(function(){
+		$(".homeSearch").toggle();
+	});
+</script>
+</body>
+</html>

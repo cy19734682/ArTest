@@ -1,0 +1,71 @@
+.head-icon {
+    position: relative;
+    z-index: 5;
+    float: right;
+}
+.head-icon a, header .left {
+    float: left;
+    width: 36px;
+    text-align: center;
+}
+.head-icon a span, header .ico-cate span, header .ico-back span {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+.head-icon a span i, header .ico-cate span i {
+    display: block;
+    margin: 0 auto;
+    width: 21px;
+    height: 21px;
+    background: url(../image/icon-head.png) no-repeat;
+    background-size: 105px auto;
+}
+.head-icon a, header .left {
+    float: left;
+    width: 36px;
+    text-align: center;
+}
+.ico-search i {
+    background-position: -84px -21px !important;
+}
+.ico-my i {
+    background-position: 0 -21px !important;
+}
+	.am-nav>li>a {
+	    padding: .4em .5em;
+	}
+	 .sortmore{
+		margin-top:0;
+	} 
+	.am-nav-pills li{
+	 width:16.666%;
+	 margin-left: 0!important;
+	}
+	.am-nav>li>a{
+		text-align:center;
+	}
+	.smore .am-icon-angle-down:before {
+    transition: All 0.4s ease-in-out;
+    -webkit-transition: All 0.4s ease-in-out;
+    -moz-transition: All 0.4s ease-in-out;
+    -o-transition: All 0.4s ease-in-out;
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+	}
+	.am-nav>li.other{
+	   display:none;
+	}
+.homeSearch{
+	position:relative;margin:10px 10px 0 10px;
+	padding:0 15px;border:1px solid #e4e4e4;border-radius:25px;
+	margin-bottom:10px;background:#FFF;display:none;}
+.homeSearch input{padding:0 12px;width:100%;height:30px;line-height:normal;border:none;font-size:14px;outline:none}
+.homeSearch:before{position:absolute;left:10px;top:50%;margin-top:-6px;display:block;content:'';width:13px;
+height:13px;background:url(../image/home.png) no-repeat;background-size:200px}
+.homeSearch input.btn-search{position:absolute;top:0;right:0;width:inherit;background:none}
+#new_searchtext{color:#ccc;padding:0 12px;width:100%;height:30px;line-height:30px;font-size:14px;outline:none;overflow:hidden}
+

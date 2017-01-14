@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.yush.ar.dao.ArDao">
+ 	<select id="countAr"  resultType="int">
+	  select count(1) from t_ar e left join t_sort s on e.sortId=s.sortId  where  1=1 
+	 	<if test="keyword!=''&amp;&amp;keyword!=null">
+	 	 and  (e.arName like '%${keyword}%' or e.arDescription like '%${keyword}%')
+	 	</if>
+	 	<if test="tag!=''&amp;&amp;tag!=null">
+	 	 and  (e.tag like '%${tag}%')
+	 	</if>
+	 	<if test="sortId!=''&amp;&amp;sortId!=null">
+	 		and e.sortId=#{sortId} 
+	 	</if>
+	 	<if test="recommend!=''&amp;&amp;recommend!=null">
+		 	and e.recommend=#{recommend} 
+	 	 </if>
+	 	<if test="state!=''&amp;&amp;state!=null">
+	 		and e.state=#{state}	 
+	 	</if>	
+	</select>
+ 	
+ 	<select id="listAr"  resultType="hashmap">
+	  select e.arId,e.arName,e.arDescription,e.arCoverImg,e.arImg,e.arVideo,e.ar3D,e.createTime,e.checkTime,e.clickCount,e.tag,
+	  e.state,e.recommend,s.sortName,u.userName	 from t_ar e left join t_sort s on e.sortId=s.sortId left join t_users u on u.userId=e.userId  where  1=1 
+	 	<if test="keyword!=''&amp;&amp;keyword!=null">
+	 	 and  (e.arName like '%${keyword}%' or e.arDescription like '%${keyword}%')
+	 	</if>
+	 	<if test="tag!=''&amp;&amp;tag!=null">
+	 	 and  (e.tag like '%${tag}%')
+	 	</if>
+	 	<if test="sortId!=''&amp;&amp;sortId!=null">
+	 		and e.sortId=#{sortId} 
+	 	</if>
+	 	<if test="recommend!=''&amp;&amp;recommend!=null">
+		 	and e.recommend=#{recommend} 
+	 	 </if>
+	 	<if test="state!=''&amp;&amp;state!=null">
+	 		and e.state=#{state}	 
+	 	</if>	
+	 	 order by e.recommend asc,e.createTime  desc  limit #{start},#{end};	
+	</select>
+ 	
+	 <update id="updateArState">
+   			update t_ar  set state=#{state}
+   			<if test="type==1">
+		 		,checkTime=now()	 
+		 	</if>	
+   			  where arId in 
+		 <foreach  item="item" index="index" collection="arIds" open="(" separator="," close=")">
+			 	  #{item}  
+		</foreach>
+   	</update>
+   	<update id="deleteAr">
+   			delete from  t_ar where arId in 
+		 <foreach  item="item" index="index" collection="arIds" open="(" separator="," close=")">
+			 	  #{item}  
+		</foreach>
+   	</update>
+   	 <update id="updateArRecommend">
+   		update  t_ar  set recommend=#{recommend}  where arId=#{arId}; 
+   	</update>
+   	 <!-- 查询推荐资源 -->
+   	  <select id="listArRecommend" resultType="hashmap">
+	 	   select e.arId,e.arName,e.arDescription,e.arCoverImg,e.createTime,e.clickCount,u.userName
+	 	   from t_ar e left join t_users u on e.userId=u.userId  where 1=1 and e.state=0  and  
+	 	   e.recommend=0 order by e.createTime  desc limit 5;		 	
+	 </select>	 
+   	 <select id="getByIdAr"  resultType="hashmap">
+	  select e.arId,e.arName,e.arDescription,e.arCoverImg,e.arImg,e.arVideo,e.ar3D,e.createTime,e.checkTime,e.clickCount,e.tag,
+	  e.state,e.recommend,s.sortName,u.userName	 from t_ar e left join t_sort s on e.sortId=s.sortId left join t_users u on 
+	  u.userId=e.userId  where  e.arId=#{arId};
+	</select>
+   	
+   	 <select id="getPrevAr" resultType="hashmap">
+	 	  select arId,	arName from t_ar where arId =
+	 	   (select arId from t_ar where arId  &lt; #{arId} order by arId desc limit 1); 
+	 </select>	
+	  
+	   <select id="getNextAr" resultType="hashmap">
+	 	   select arId,	arName from t_ar where arId =
+	 	   (select arId from t_ar where arId  &gt; #{arId} order by arId asc limit 1);  
+	 </select>	
+	  
+	  <select id="listRelativeAr" resultType="hashmap">
+	 	SELECT	arId,	arName FROM 	t_ar  WHERE	arId  &lt;&gt; #{arId} AND sortId IN 
+	 	  (SELECT	arId	FROM  t_ar	WHERE	arId = #{arId})ORDER BY	rand() LIMIT 5;
+	 </select>	
+   	 
+   	 <update id="addClickCount">
+	 	update  t_ar set clickCount=clickCount+1 where arId=#{arId};
+	 </update>
+   	
+   	
+</mapper>

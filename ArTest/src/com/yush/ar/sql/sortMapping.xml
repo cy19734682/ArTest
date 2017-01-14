@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.yush.ar.dao.SortDao">
+ 
+    <select id="listSort"  resultType="hashmap">
+			SELECT  *  FROM  t_sort;
+	</select>
+	
+	<select id="getbyIdSort"  resultType="hashmap">
+			SELECT  *  FROM  t_sort where 1=1 
+		 <if test="sortId!=''&amp;&amp;sortId!=null">
+		 	and sortId=#{sortId} 
+	 	 </if>
+	 	  <if test="parentId!=''&amp;&amp;parentId!=null">
+		 	and sortId=#{parentId} 
+	 	 </if>
+	 	 limit 1;
+	</select>
+	 
+	 <select id="getbyIdListSort"  resultType="hashmap">
+			SELECT  *  FROM  t_sort where 1=1 
+	 	  <if test="parentId!=''&amp;&amp;parentId!=null">
+		 	and parentId=#{parentId}
+	 	 </if>
+	 	 <if test="parentId==''||parentId==null">
+		 	and 1=2;
+	 	 </if>
+	</select>
+	 
+	 <insert id="addSort" >
+	 	INSERT INTO t_sort(sortName,parentId,description)  VALUES(
+	 		#{sortName},#{parentId},#{description}
+	 	)
+	 </insert>
+	 
+	  <update id="updateNote">
+		update t_sort  
+		<if test="note==1">
+			set note=1 
+		 </if>
+		  <if test="note==0">
+			set note=0
+		 </if>
+		 where sortId=#{parentId};
+ 	 </update>
+		
+	  <update id="updateSort">
+		update t_sort  set sortName=#{sortName},description=#{description}  where sortId=#{sortId};
+ 	 </update>	
+		
+	<delete id="delSort">
+		DELETE FROM t_sort WHERE sortId=#{sortId};
+	</delete>
+	
+	 <select id="isNote"  resultType="INTEGER">
+			SELECT  count(1)  a  FROM  t_sort where parentId=#{parentId};
+	</select>
+	
+</mapper>

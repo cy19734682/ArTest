@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+	 
+	<context:component-scan base-package="com.yush.ar"/> <!-- 需要扫描的包 -->
+ 		
+ 	  <!-- 引入jdbc配置文件 -->  
+ 		
+	<bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="username" value="root">
+		</property> 
+		<property name="password" value="123321">
+		</property>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url" value="jdbc:mysql://localhost:3306/artest?zeroDateTimeBehavior=convertToNull">
+		</property>
+		<!--  <property name="connectionProperties" value="useUnicode=yes;characterEncoding=utf8;">
+		 </property>  -->
+	</bean>
+	
+	<!-- <bean id="sessionServiceImpl" class="com.yush.mk.service.SessionServiceImpl" /> -->
+	
+	<bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dbcp">
+		</property>
+		<property name="mapperLocations"  value="classpath:com/yush/ar/sql/*.xml">
+		</property>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.yush.ar.dao">
+		</property>
+	</bean>
+	
+	<mvc:default-servlet-handler/>   
+	<!-- 验证码  --> 
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha"> 
+        <property name="config">  
+            <bean class="com.google.code.kaptcha.util.Config">  
+                <constructor-arg>  
+                    <props>  
+                        <prop key="kaptcha.border">no</prop>  
+                        <prop key="kaptcha.border.color">105,179,90</prop>  
+                        <prop key="kaptcha.textproducer.font.color">red</prop>  
+                        <prop key="kaptcha.image.width">300</prop>  
+                        <prop key="kaptcha.textproducer.font.size">90</prop>  
+                        <prop key="kaptcha.image.height">100</prop>  
+                        <prop key="kaptcha.session.key">code</prop>  
+                        <prop key="kaptcha.textproducer.char.length">6</prop>  
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>  
+                    </props>  
+                </constructor-arg>  
+            </bean>  
+        </property>  
+    </bean> 
+	  	
+	  		<!-- spring上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+     <property name="maxUploadSize" value="104857600"/>  
+       <property name="maxInMemorySize" value="4096"/>  
+    </bean>  
+	
+	  	
+	  	 <!-- 拦截器 -->	
+	 <mvc:interceptors>    
+	    <mvc:interceptor>    
+	       <!--  匹配的是url路径， 如果不配置或/**,将拦截所有的Controller   -->
+	        <mvc:mapping path="/admins/**" />  
+	         <mvc:exclude-mapping path="/admins/toLogin"/>   
+	         <mvc:exclude-mapping path="/admins/login"/>   
+	        <bean class="com.yush.ar.interceptor.AdminInterceptor"></bean>    
+	    </mvc:interceptor>  
+	 <!--    当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法   -->
+	</mvc:interceptors> 
+		
+		
+		<mvc:annotation-driven/><!-- 启用注解驱动。 -->
+		
+		<!-- <bean id="sessionlistener" class="com.yush.mk.listener.Sessionlistener1" />
+
+	    <bean id="l" class="org.springframework.session.web.http.SessionEventHttpSessionListenerAdapter">
+	        <constructor-arg>
+	            <list>
+	                <ref bean="sessionlistener"/>
+	            </list>
+	        </constructor-arg>
+	    </bean>
+	
+	    <bean class="org.springframework.security.web.session.HttpSessionEventPublisher"/> -->
+	
+	     <!-- <mvc:interceptors>  
+	        <mvc:interceptor>  
+	              <mvc:mapping path="/*/*.do" />  
+	            <bean id="LoginInterceptor" class="com.yush.mk.interceptor.LoginInterceptor" />  
+	        </mvc:interceptor>  
+	    </mvc:interceptors>   -->
+	
+</beans>

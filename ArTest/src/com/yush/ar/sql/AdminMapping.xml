@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="com.yush.ar.dao.AdminDao">
+ 
+ 	<select id="findByName"  parameterType="string"
+		resultType="com.yush.ar.entity.Admin">
+	SELECT  adminId,userName,passWord,name,power  FROM  t_admin  WHERE userName=#{username}  LIMIT 1;
+	</select>
+	
+	 <select id="findById"  parameterType="string"
+			resultType="com.yush.ar.entity.Admin">
+		SELECT  adminId,userName,passWord   FROM  t_admin  WHERE adminId=#{adminid}  LIMIT 1;
+	</select>
+	
+	  <select id="countAdmin"  resultType="INTEGER">
+			SELECT  count(1) FROM  t_admin;
+	</select>
+   
+	
+    <select id="listAdmins"  resultType="hashmap">
+			SELECT  adminId,userName,passWord,name,power  FROM  t_admin  order by power  asc ,adminId  desc limit #{start},#{end};
+	</select>
+   
+   <update id="editUser">
+   	   update t_admin set passWord=#{password},name=#{name}  where adminId=${userid};
+   </update>
+   <insert id="addUser">
+   		insert into t_admin(userName,passWord,name) values (#{username},#{password},#{name});
+   </insert>
+   
+    <delete id="delUser">
+    	delete from t_admin where adminId=${userid};
+    </delete>
+   
+</mapper>
